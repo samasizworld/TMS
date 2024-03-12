@@ -1,0 +1,479 @@
+{
+	"info": {
+		"_postman_id": "e85dbecf-317c-4ee1-b528-dc66d9f68fb0",
+		"name": "Endless-Tasks",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "addUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Firstname\": \"Ais\",\r\n    \"Emailaddress\": \"abc@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUserList",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/users?pageSize=0&page=2&search=&orderDir=asc&orderBy=emailaddress",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "pageSize",
+							"value": "0"
+						},
+						{
+							"key": "page",
+							"value": "2"
+						},
+						{
+							"key": "search",
+							"value": ""
+						},
+						{
+							"key": "orderDir",
+							"value": "asc"
+						},
+						{
+							"key": "orderBy",
+							"value": "emailaddress"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUser",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/users/77ffef7b-57d5-4eee-a14d-88ded38618dd",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"77ffef7b-57d5-4eee-a14d-88ded38618dd"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateUser",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Firstname\": \"Cis\",\r\n    \"Emailaddress\": \"xyz@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/users/77ffef7b-57d5-4eee-a14d-88ded38618dd",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"77ffef7b-57d5-4eee-a14d-88ded38618dd"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteUser",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Firstname\": \"Cis\",\r\n    \"Emailaddress\": \"xyz@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/users/57bef7fe-c3aa-4971-8df2-c4e8887b7582",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"57bef7fe-c3aa-4971-8df2-c4e8887b7582"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addTasks",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Title\": \"Nestjs Integration\",\r\n    \"Description\": \"Please integrate nestjs with mongoose\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getTasks",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Title\": \"Nestjs Integration\",\r\n    \"Description\": \"Please integrate nestjs with mongoose\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/tasks?pageSize=20&page=1&search=&orderDir=asc&orderBy=",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tasks"
+					],
+					"query": [
+						{
+							"key": "pageSize",
+							"value": "20"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "search",
+							"value": ""
+						},
+						{
+							"key": "orderDir",
+							"value": "asc"
+						},
+						{
+							"key": "orderBy",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getTask",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Title\": \"Nestjs Integration\",\r\n    \"Description\": \"Please integrate nestjs with mongoose\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/tasks/df1e656b-4e07-47bb-8f3b-d5993ce00f5a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tasks",
+						"df1e656b-4e07-47bb-8f3b-d5993ce00f5a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteTask",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Title\": \"Nestjs Integration\",\r\n    \"Description\": \"Please integrate nestjs with mongoose\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/tasks/dd6cc679-2936-48a3-8caf-efe6436b0d78",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tasks",
+						"dd6cc679-2936-48a3-8caf-efe6436b0d78"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateTask",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Title\": \"Nodejs Integration\",\r\n    \"Description\": \"Please integrate nodejs with mongoose\",\r\n    \"AssignedUsers\": [\r\n        {\r\n            \"UserId\": \"c4fdeb10-3835-4cfd-9a91-551a16f24fdc\",\r\n            \"TaskStatus\": \"todo\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/tasks/df1e656b-4e07-47bb-8f3b-d5993ce00f5a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tasks",
+						"df1e656b-4e07-47bb-8f3b-d5993ce00f5a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "generateToken-Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"token\",pm.response.json()?.AuthenticationKey);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Username\": \"admin@admin.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/generateToken",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"generateToken"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "generateToken-ForNormalUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"token\",pm.response.json()?.AuthenticationKey);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Username\": \"abc@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/generateToken",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"generateToken"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

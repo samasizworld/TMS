@@ -1,0 +1,1 @@
+export const JWT_KEY = 'abc#1@123';
