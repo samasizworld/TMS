@@ -1,7 +1,8 @@
 import { InjectModel } from "@nestjs/sequelize";
 import { User } from "./userModels";
-import { Injectable, Query } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { Op, QueryTypes } from "sequelize";
+import { userModel } from "./userBodyValidator";
 
 @Injectable()
 export class UserService {
@@ -26,19 +27,24 @@ export class UserService {
     async getUser(userId: string) {
         return await this.userContext.findOne({ where: { datedeleted: null, guid: userId } });
     }
-    async getUserByEmail(emailAddress: string) {
-        return await this.userContext.findOne({ where: { datedeleted: null, emailaddress: { [Op.iLike]: emailAddress } } });
+    async getUserByEmail(emailAddress: string, userId: string = '') {
+        if (!userId) {
+            return await this.userContext.findOne({ where: { datedeleted: null, emailaddress: { [Op.iLike]: emailAddress } } });
+
+        } else {
+            return await this.userContext.findOne({ where: { datedeleted: null, emailaddress: { [Op.iLike]: emailAddress }, guid: { [Op.ne]: userId } } });
+        }
     }
 
-    async createUser(firstname: string, middlename: string, lastname: string, emailaddress: string): Promise<User> {
-        const userData = { firstname, middlename, lastname, emailaddress }
-        return await this.userContext.create(userData);
+    async createUser(userDto: userModel): Promise<User> {
+        const { firstname, lastname, middlename, emailaddress } = userDto;
+        return await this.userContext.create({ firstname, lastname, middlename, emailaddress });
     }
 
-    async updateUser(firstname: string, middlename: string, lastname: string, emailaddress: string, userId: string,): Promise<User> {
+    async updateUser(userDto: userModel, userId: string): Promise<User> {
         const whereClause = { datedeleted: null, guid: userId }
-        const userData = { firstname, middlename, lastname, emailaddress }
-        const [rows, [user]] = await this.userContext.update(userData, { where: whereClause, returning: true });
+        const { firstname, lastname, middlename, emailaddress } = userDto;
+        const [rows, [user]] = await this.userContext.update({ firstname, lastname, middlename, emailaddress }, { where: whereClause, returning: true });
         return user;
     }
 

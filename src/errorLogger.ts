@@ -39,7 +39,6 @@ export class ErrorLoggingFilter implements ExceptionFilter {
 
         // Optionally, you can write the error to a file
         writeFileSync(logFilePath, logText, { flag: 'a' });
-
         // Send an error response to the client
         response.status(status).json({
             statusCode: status,
