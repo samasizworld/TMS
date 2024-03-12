@@ -2,8 +2,6 @@ import { InjectModel } from "@nestjs/sequelize";
 import { Task } from "./taskModels";
 import { Injectable } from "@nestjs/common";
 import { QueryTypes } from "sequelize";
-import { User } from "src/usermodule/userModels";
-import { UserTasks } from "src/usertaskmodule/userTaskModels";
 
 @Injectable()
 export class TaskService {

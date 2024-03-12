@@ -6,9 +6,16 @@ import { AuthModule } from './authmodule/auth.module';
 import { JWT_KEY } from './authmodule/symmetricKey';
 import { AdminMiddleware, AuthenticationMiddleware } from './authmodule/auth.middleware';
 import { DatabaseModule } from './config/databaseConnection.module';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { FileLogger } from './loggerInterceptor';
+import { ErrorLoggingFilter } from './errorLogger';
 
 @Module({
   imports: [UserModule, TaskModule, UserTaskModule, AuthModule.forRoot(JWT_KEY), DatabaseModule],
+  providers: [
+    // { provide: APP_INTERCEPTOR, useClass: FileLogger },
+    { provide: APP_FILTER, useClass: ErrorLoggingFilter }
+  ]
 })
 export class AppModule implements NestModule {
   // normal user only see the task list and retrive the details

@@ -1,6 +1,5 @@
-import { Table, Column, Model, PrimaryKey, DataType, BelongsToMany } from 'sequelize-typescript';
-import { User } from 'src/usermodule/userModels';
-import { UserTasks } from 'src/usertaskmodule/userTaskModels';
+import { Table, Column, Model, PrimaryKey, DataType } from 'sequelize-typescript';
+
 
 @Table(
   {
