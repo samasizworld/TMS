@@ -230,13 +230,15 @@ DECLARE
 		
 		
         sqlselect:= FORMAT('SELECT t.guid, t.title, t.description, t.datemodified, t.datecreated, 
-						   (SELECT json_agg(row_to_json(x) FROM (SELECT * FROM usertasks ut JOIN users u ON u.userid = ut.userid AND u.datedeleted IS NULL WHERE ut.datedeleted IS NULL AND ut.taskid = t.taskid %1$s ) x)',userquery);        
+						   (SELECT json_agg(row_to_json(x)) FROM (SELECT u.guid as userguid, ut.status, u.emailaddress FROM usertasks ut JOIN users u ON u.userid = ut.userid AND u.datedeleted IS NULL WHERE ut.datedeleted IS NULL AND ut.taskid = t.taskid %1$s ) x)',userquery);        
 		
 		sqlfrom:=FORMAT(' FROM tasks t ');
-		sqlwhere := sqlwhere || ' WHERE t.datedeleted IS NULL ';
+		sqlwhere := sqlwhere || FORMAT(' WHERE t.datedeleted IS NULL AND t.guid = ''%1$s'' ',taskid);
 		
+		sqlquery:= sqlselect|| sqlfrom || sqlwhere;
 		
-
+		RAISE NOTICE 'sql %',sqlquery;
+		RETURN QUERY EXECUTE sqlquery;
 		
 		EXCEPTION WHEN OTHERS THEN
 		RAISE INFO 'Error :%',SQLERRM;
