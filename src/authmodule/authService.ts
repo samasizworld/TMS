@@ -5,14 +5,14 @@ import { sign, verify } from 'jsonwebtoken';
 @Injectable()
 export class AuthService {
     // injecting properties dynamically
-    private secretKey:string ='SYMMETRIC_KEY';
+    private secretKey: string = 'SYMMETRIC_KEY';
     constructor(@Inject('JWT_KEY') key: string) {
         this.secretKey = key
     }
     generateToken(payload: any): string {
         // algorithm is HS256
         // expires in 1min
-        return sign(payload, this.secretKey, { expiresIn: 60 });
+        return sign(payload, this.secretKey, { expiresIn: 60 * 60 });
     }
 
     verifyToken(token: string): any {

@@ -31,7 +31,7 @@ export class TaskController {
                 ModifiedDate: task.datemodified
             }
         });
-        res.header('X-PageCount', tasks[0]?.total || 0)
+        res.header('x-count', tasks[0]?.total || 0)
         return res.status(200).send(resTasks);
     }
     @Get(':taskid')

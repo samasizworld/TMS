@@ -9,9 +9,11 @@ import { DatabaseModule } from './config/databaseConnection.module';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { FileLogger } from './loggerInterceptor';
 import { ErrorLoggingFilter } from './errorLogger';
+import { PingController } from './pingmodule/pingController';
+import { PingModule } from './pingmodule/ping.module';
 
 @Module({
-  imports: [UserModule, TaskModule, UserTaskModule, AuthModule.forRoot(JWT_KEY), DatabaseModule],
+  imports: [UserModule, TaskModule, UserTaskModule, AuthModule.forRoot(JWT_KEY), DatabaseModule, PingModule],
   providers: [
     // { provide: APP_INTERCEPTOR, useClass: FileLogger },
     { provide: APP_FILTER, useClass: ErrorLoggingFilter }
