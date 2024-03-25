@@ -187,3 +187,9 @@ $BODY$;
 -- 	'asc',--<orderby character varying>, 
 -- 	'creationdate'--<orderdir character varying>
 -- )
+
+-- add columns
+
+ALTER TABLE users
+ADD COLUMN IF NOT EXISTS enablesso boolean default false,
+ADD COLUMN IF NOT EXISTS enable2fa boolean default false;

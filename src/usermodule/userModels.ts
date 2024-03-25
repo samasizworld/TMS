@@ -35,4 +35,10 @@ export class User extends Model<User> {
 
   @Column({ type: DataType.BOOLEAN })
   issystemadmin: boolean
+
+  @Column({ type: DataType.BOOLEAN })
+  enable2fa: boolean
+
+  @Column({ type: DataType.BOOLEAN })
+  enablesso: boolean
 }
