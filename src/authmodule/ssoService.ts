@@ -11,8 +11,8 @@ export class SSOService {
         const formData = new FormData();
         formData.append('grant_type', 'authorization_code');
         formData.append('code', accessToken);
-        formData.append('client_id', '728206852777-pg8qjfggo8ra66mej67a6h4t1k6onoeb.apps.googleusercontent.com');
-        formData.append('client_secret', 'sug0PuZ4yxsxqYXMC4hTdA5r');
+        formData.append('client_id', '');
+        formData.append('client_secret', '');
         formData.append('redirect_uri', 'http://localhost:3000/auth/cb');
         const data: any = await axios.post('https://accounts.google.com/o/oauth2/token', formData, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
 
