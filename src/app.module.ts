@@ -23,6 +23,6 @@ export class AppModule implements NestModule {
   // normal user only see the task list and retrive the details
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(AuthenticationMiddleware).forRoutes('users', 'tasks')
-      .apply(AdminMiddleware).exclude({ path: '/tasks', method: RequestMethod.GET }, { path: '/tasks/:taskid', method: RequestMethod.GET }).forRoutes('users', 'tasks')
+      .apply(AdminMiddleware).exclude({ path: '/tasks', method: RequestMethod.GET }, { path: '/tasks/:taskid', method: RequestMethod.GET }, { path: '/users', method: RequestMethod.GET }).forRoutes('users', 'tasks')
   }
 }

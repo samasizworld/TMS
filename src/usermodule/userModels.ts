@@ -41,4 +41,7 @@ export class User extends Model<User> {
 
   @Column({ type: DataType.BOOLEAN })
   enablesso: boolean
+
+  @Column({ type: DataType.TEXT })
+  secretkey2fa: string
 }

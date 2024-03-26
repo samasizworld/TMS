@@ -192,4 +192,5 @@ $BODY$;
 
 ALTER TABLE users
 ADD COLUMN IF NOT EXISTS enablesso boolean default false,
-ADD COLUMN IF NOT EXISTS enable2fa boolean default false;
+ADD COLUMN IF NOT EXISTS enable2fa boolean default false,
+ADD COLUMN IF NOT EXISTS secretkey2fa text;
