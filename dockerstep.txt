@@ -1,0 +1,6 @@
+docker build -t taskmanagementapi .   
+
+
+docker run -d --name taskservice -p 6060:6060 --add-host taskapi:host-gateway  taskmanagementapi
+
+--add-host does taskapi=> hostname and host-gateway is ip address of local machine 

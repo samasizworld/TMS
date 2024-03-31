@@ -1,6 +1,6 @@
 export const sequelizeConfig: any = {
   dialect: 'postgres',
-  host: 'localhost',
+  host: 'taskapi',
   port: 5432, // default port for PostgreSQL
   username: 'postgres',
   password: '1234',
