@@ -18,7 +18,7 @@ export class UserController {
         const orderDir: any = req.query.orderDir ? req.query.orderDir : "ASC";
         const users: any[] = await this.userService.getUsers(search, pageSize, offset, orderBy, orderDir);
         const dtos = this.userMapper.userListMapper(users)
-        res.header('X-PageCount', users[0]?.total || 0)
+        res.header('x-count', users[0]?.total || 0)
         return res.status(200).send(dtos);
     }
     @Get(':userid')

@@ -5,7 +5,6 @@ import { jwtDecode } from 'jwt-decode';
 @Injectable()
 export class SSOService {
     constructor() {
-
     }
     async checkSSOAuthKey(accessToken: string) {
         const formData = new FormData();

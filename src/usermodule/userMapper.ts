@@ -26,7 +26,9 @@ export class UserMapper {
             Lastname: user.lastname,
             EmailAddress: user.emailaddress,
             CreationDate: user.datecreated,
-            ModifiedDate: user.datemodified
+            ModifiedDate: user.datemodified,
+            SSO: user.enablesso,
+            MFA: user.enable2fa
         }
     }
 
@@ -35,7 +37,9 @@ export class UserMapper {
             firstname: user.Firstname,
             middlename: user.Middlename,
             lastname: user.Lastname,
-            emailaddress: user.Emailaddress
+            emailaddress: user.Emailaddress,
+            enablesso: user.SSO,
+            enable2fa: user.MFA
         }
     }
 }
