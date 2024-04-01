@@ -28,7 +28,8 @@ export class TaskController {
                 Title: task.title,
                 Description: task.description,
                 CreationDate: task.datecreated,
-                ModifiedDate: task.datemodified
+                ModifiedDate: task.datemodified,
+                TaskStatus: task.tstatus
             }
         });
         res.header('x-count', tasks[0]?.total || 0)

@@ -49,7 +49,8 @@ CREATE OR REPLACE FUNCTION get_tasklist(
 				  title character varying, 
 				  description text, 
 				  datemodified timestamp without time zone,
-				  datecreated timestamp without time zone) 
+				  datecreated timestamp without time zone,
+				  tstatus character varying) 
     LANGUAGE 'plpgsql'
     COST 100
     VOLATILE PARALLEL UNSAFE
@@ -108,29 +109,25 @@ DECLARE
 		END IF;
 
         BEGIN
-        sqlselect:= FORMAT('SELECT $2::integer, t.guid, t.title, t.description, t.datemodified, t.datecreated');        
+        sqlselect:= FORMAT('SELECT $2::integer, t.guid, t.title, t.description, t.datemodified, t.datecreated, ut.status::character varying');        
 		
-		sqlfrom:=FORMAT(' FROM tasks t ');
-		sqlwhere := sqlwhere || ' WHERE t.datedeleted IS NULL ';
+		sqlfrom:=FORMAT(' FROM tasks t 
+						LEFT JOIN usertasks ut ON ut.taskid = t.taskid
+						JOIN users u ON ut.userid = u.userid ');
+		sqlwhere := sqlwhere || ' WHERE t.datedeleted IS NULL AND ut.datedeleted IS NULL AND u.datedeleted IS NULL';
 		IF (isadmin = false) THEN
 			IF (COALESCE(loginuser,'')<>'')THEN
-				sqlfrom = sqlfrom||' 
-								   JOIN usertasks ut ON ut.taskid = t.taskid AND ut.datedeleted IS NULL
-								   JOIN users u ON ut.userid = u.userid AND u.datedeleted IS NULL';
 				sqlwhere := sqlwhere || FORMAT(' AND u.guid = ''%1$s''::uuid ', loginuser);
 			END IF;
 		ELSE
 			
 			IF (COALESCE(userids,'')<>'')THEN
-				sqlfrom = sqlfrom||' 
-								   JOIN usertasks ut ON ut.taskid = t.taskid AND ut.datedeleted IS NULL
-								   JOIN users u ON ut.userid = u.userid AND u.datedeleted IS NULL';
 				sqlwhere := sqlwhere || FORMAT(' AND u.guid = ANY(''{%1$s}'') ', userids);
 			END IF;
 		END IF;
 
 		IF (taskstatus<>'') THEN
-			sqlwhere := sqlwhere || FORMAT(' AND status = ''%1$s'' ',taskstatus); 
+			sqlwhere := sqlwhere || FORMAT(' AND ut.status = ''%1$s'' ',taskstatus); 
 		END IF;
 		
 		sqlquery:='PREPARE task_count(varchar(100)) as 
