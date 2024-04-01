@@ -42,15 +42,27 @@ export class TaskController {
         const loggedInUser = req['UserId'];
         const [retTask]: any = await this.taskService.getTaskWithUsers(taskId, loggedInUser, isAdmin);
         const task: TaskInterfaceDB = retTask
-        const resTask = {
-            TaskId: task.taskguid,
-            Title: task.title,
-            Description: task.description,
-            CreationDate: task.datecreated,
-            ModifiedDate: task.datemodified,
-            AssignedUsers: task.assignedusers ? task.assignedusers.map(u => { return { UserId: u.userguid, TaskStatus: u.status, Emailaddress: u.emailaddress } }) : []
-
+        let resTask: any;
+        if (!isAdmin) {
+            resTask = {
+                TaskId: task.taskguid,
+                Title: task.title,
+                Description: task.description,
+                CreationDate: task.datecreated,
+                ModifiedDate: task.datemodified,
+                AssignedUsers: task.assignedusers ? task.assignedusers.filter(au => au.userguid == loggedInUser).map(u => { return { UserId: u.userguid, TaskStatus: u.status, Emailaddress: u.emailaddress, UserTaskId: u.usertaskguid } }) : []
+            }
+        } else {
+            resTask = {
+                TaskId: task.taskguid,
+                Title: task.title,
+                Description: task.description,
+                CreationDate: task.datecreated,
+                ModifiedDate: task.datemodified,
+                AssignedUsers: task.assignedusers ? task.assignedusers.map(u => { return { UserId: u.userguid, TaskStatus: u.status, Emailaddress: u.emailaddress, UserTaskId: u.usertaskguid } }) : []
+            }
         }
+
         return res.status(200).send(resTask);
     }
 

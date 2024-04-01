@@ -22,4 +22,9 @@ export class UserTaskService {
         await this.userTaskContext.update({ datedeleted: new Date() }, { where: { datedeleted: null, taskid: taskId } });
 
     }
+
+    async updateUserTaskRows(taskStatus: string, userTaskId: string) {
+        await this.userTaskContext.update({ status: taskStatus }, { where: { datedeleted: null, guid: userTaskId } });
+
+    }
 }

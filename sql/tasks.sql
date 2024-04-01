@@ -124,6 +124,10 @@ DECLARE
 			IF (COALESCE(userids,'')<>'')THEN
 				sqlwhere := sqlwhere || FORMAT(' AND u.guid = ANY(''{%1$s}'') ', userids);
 			END IF;
+			sqlselect:= FORMAT('SELECT $2::integer, t.guid, t.title, t.description, t.datemodified, t.datecreated, ''''::character varying');        
+
+			sqlgroupby = ' GROUP BY t.guid, t.title, t.description, t.datemodified, t.datecreated ';
+
 		END IF;
 
 		IF (taskstatus<>'') THEN
@@ -149,6 +153,7 @@ DECLARE
 														|| sqlfrom
                                                         || sqlwhere
 														|| searchquery
+														|| sqlgroupby
 														|| sqlorder
 														|| sqlpaging;
 
@@ -227,7 +232,7 @@ DECLARE
 		
 		
         sqlselect:= FORMAT('SELECT t.guid, t.title, t.description, t.datemodified, t.datecreated, 
-						   (SELECT json_agg(row_to_json(x)) FROM (SELECT u.guid as userguid, ut.status, u.emailaddress FROM usertasks ut JOIN users u ON u.userid = ut.userid AND u.datedeleted IS NULL WHERE ut.datedeleted IS NULL AND ut.taskid = t.taskid %1$s ) x)',userquery);        
+						   (SELECT json_agg(row_to_json(x)) FROM (SELECT u.guid as userguid, ut.status, u.emailaddress,ut.guid as usertaskguid FROM usertasks ut JOIN users u ON u.userid = ut.userid AND u.datedeleted IS NULL WHERE ut.datedeleted IS NULL AND ut.taskid = t.taskid %1$s ) x)',userquery);        
 		
 		sqlfrom:=FORMAT(' FROM tasks t ');
 		sqlwhere := sqlwhere || FORMAT(' WHERE t.datedeleted IS NULL AND t.guid = ''%1$s'' ',taskid);
