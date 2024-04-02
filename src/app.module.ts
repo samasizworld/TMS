@@ -9,7 +9,6 @@ import { DatabaseModule } from './config/databaseConnection.module';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { FileLogger } from './loggerInterceptor';
 import { ErrorLoggingFilter } from './errorLogger';
-import { PingController } from './pingmodule/pingController';
 import { PingModule } from './pingmodule/ping.module';
 
 @Module({

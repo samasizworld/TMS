@@ -10,11 +10,11 @@ export class MFA {
     }
     generateSecret() {
         const randomBuffer = randomBytes(20);
-        return Buffer.from(randomBuffer).toString("base64").replace(/=/g, "")
+        return encode(randomBuffer).replace(/=/g, "")
     }
 
     async generateQRCodeDataForMFA(key: string, email: string) {
-       return await toDataURL(`otpauth://totp/${email}?secret=${key}&issuedby=tms.asis`)
+        return await toDataURL(`otpauth://totp/${email}?secret=${key}&issuedby=tms.asis`)
     }
 
 
