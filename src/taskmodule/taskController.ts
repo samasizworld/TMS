@@ -96,7 +96,7 @@ export class TaskController {
     @Patch('/usertasks/:usertaskid')
     async patchStatus(@Req() req: Request, @Res() res: Response) {
         const userTaskId = req.params.usertaskid;
-        const task: any = await this.taskUserService.updateUserTaskRows(req.body.TaskStatus, userTaskId);
+        const task = await this.taskUserService.updateUserTaskRows(req.body.TaskStatus, userTaskId);
         await this.taskService.updateTaskDescription(task.taskid, req.body.Description)
         return res.status(204).send();
     }

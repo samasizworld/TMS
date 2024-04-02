@@ -14,10 +14,10 @@ export class UserTasks extends Model {
     guid: string;
 
     @Column
-    userid: string;
+    userid: number;
 
     @Column
-    taskid: string;
+    taskid: number;
 
     @Column({
         type:DataType.ENUM('todo', 'inprogress','done'),

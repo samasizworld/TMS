@@ -24,7 +24,7 @@ export class UserTaskService {
     }
 
     async updateUserTaskRows(taskStatus: string, userTaskId: string) {
-        await this.userTaskContext.update({ status: taskStatus }, { where: { datedeleted: null, guid: userTaskId }, returning: true });
-
+        const [rows, [userTask]] = await this.userTaskContext.update({ status: taskStatus }, { where: { datedeleted: null, guid: userTaskId }, returning: true });
+        return userTask;
     }
 }
