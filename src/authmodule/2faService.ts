@@ -2,17 +2,20 @@ import { Injectable } from '@nestjs/common';
 import { createHmac, randomBytes } from 'crypto'
 
 import { encode, decode } from 'hi-base32'
-
+import { toDataURL } from 'qrcode'
 @Injectable()
 export class MFA {
     // private readonly randomByteLength: number
     constructor() {
-        // this.randomByteLength = randomByte
     }
-    // generateSecret() {
-    //     const randomBuffer = randomBytes(this.randomByteLength);
-    //     return Buffer.from(randomBuffer).toString("base64").replace(/=/g, "")
-    // }
+    generateSecret() {
+        const randomBuffer = randomBytes(20);
+        return Buffer.from(randomBuffer).toString("base64").replace(/=/g, "")
+    }
+
+    async generateQRCodeDataForMFA(key: string, email: string) {
+       return await toDataURL(`otpauth://totp/${email}?secret=${key}&issuedby=tms.asis`)
+    }
 
 
     verifyOTP(OTPCode: string, secret: string, OTPValidTimeInSec: number = 30): boolean {

@@ -37,14 +37,14 @@ export class UserService {
     }
 
     async createUser(userDto: userModel): Promise<User> {
-        const { firstname, lastname, middlename, emailaddress, enable2fa, enablesso } = userDto;
-        return await this.userContext.create({ firstname, lastname, middlename, emailaddress, enable2fa, enablesso });
+        const { firstname, lastname, middlename, emailaddress, enable2fa, enablesso,secretkey2fa } = userDto;
+        return await this.userContext.create({ firstname, lastname, middlename, emailaddress, enable2fa, enablesso,secretkey2fa });
     }
 
     async updateUser(userDto: userModel, userId: string): Promise<User> {
         const whereClause = { datedeleted: null, guid: userId }
-        const { firstname, lastname, middlename, emailaddress, enable2fa, enablesso } = userDto;
-        const [rows, [user]] = await this.userContext.update({ firstname, lastname, middlename, emailaddress, enable2fa, enablesso }, { where: whereClause, returning: true });
+        const { firstname, lastname, middlename, emailaddress, enable2fa, enablesso,secretkey2fa } = userDto;
+        const [rows, [user]] = await this.userContext.update({ firstname, lastname, middlename, emailaddress, enable2fa, enablesso,secretkey2fa }, { where: whereClause, returning: true });
         return user;
     }
 

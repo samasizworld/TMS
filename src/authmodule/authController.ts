@@ -31,7 +31,7 @@ export class AuthController {
             return res.status(200).send({ AuthenticationKey: token, IsAdmin: user.issystemadmin, sso: true });
 
         } else {
-            if (OTPCode && this.mfaService.verifyOTP(OTPCode, 'WMLEINI3PO6C3CTINM7PNLRR2CN4CZ2F')) {
+            if (OTPCode && this.mfaService.verifyOTP(OTPCode, user.secretkey2fa)) {
                 return res.status(200).send({ AuthenticationKey: token, IsAdmin: user.issystemadmin, sso: false });
             } else {
                 throw new BadRequestException('Invalid OTPcode');

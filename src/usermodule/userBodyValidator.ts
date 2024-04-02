@@ -38,5 +38,6 @@ export class userModel {
 
     enablesso: boolean;
     enable2fa: boolean;
+    secretkey2fa: string;
 }
 

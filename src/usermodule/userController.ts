@@ -1,12 +1,13 @@
 import { Body, ConflictException, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put, Req, Res, ValidationPipe } from "@nestjs/common";
-import { Request, Response } from "express";
+import { Request, RequestHandler, Response } from "express";
 import { UserService } from "./userService";
 import { UserMapper } from "./userMapper";
 import { userDTO } from "./userBodyValidator";
+import { MFA } from "src/authmodule/2faService";
 
 @Controller("/users")
 export class UserController {
-    constructor(private readonly userService: UserService, private userMapper: UserMapper) { }
+    constructor(private readonly userService: UserService, private userMapper: UserMapper, private readonly mfaService: MFA) { }
 
     @Get()
     async getUsers(@Req() req: Request, @Res() res: Response) {
@@ -24,12 +25,12 @@ export class UserController {
     @Get(':userid')
     async getUser(@Res() res: Response, @Param('userid', new ParseUUIDPipe({ version: "4" })) userId: string) {
         const user = await this.userService.getUser(userId);
-        const resUser = this.userMapper.userDetailMapper(user);
+        const resUser = await this.userMapper.userDetailMapper(user);
         return res.status(200).send(resUser);
     }
     @Post()
-    async addUser(@Res() res: Response, @Body(ValidationPipe) userDto: userDTO) {
-        const userBody = this.userMapper.userPayloadMapper(userDto);
+    async addUser(@Req() req: Request, @Res() res: Response, @Body(ValidationPipe) userDto: userDTO) {
+        const userBody = this.userMapper.userPayloadMapper(userDto, req.method);
         const retUser = await this.userService.getUserByEmail(userBody.emailaddress);
         if (retUser?.emailaddress) {
             throw new ConflictException('Duplicate users');
@@ -39,12 +40,17 @@ export class UserController {
     }
 
     @Put(':userid')
-    async updateUser(@Res() res: Response, @Body(ValidationPipe) userDto: userDTO, @Param('userid', new ParseUUIDPipe({ version: "4" })) userId: string) {
-        const userBody = this.userMapper.userPayloadMapper(userDto);
+    async updateUser(@Req() req: Request, @Res() res: Response, @Body(ValidationPipe) userDto: userDTO, @Param('userid', new ParseUUIDPipe({ version: "4" })) userId: string) {
+        const userBody = this.userMapper.userPayloadMapper(userDto, req.method);
         const retUser = await this.userService.getUserByEmail(userBody.emailaddress, userId);
-
         if (retUser?.emailaddress) {
             throw new ConflictException('Duplicate users');
+        }
+
+        const user = await this.userService.getUser(userId);
+
+        if (!user?.secretkey2fa) {
+            userBody.secretkey2fa = this.mfaService.generateSecret()
         }
         await this.userService.updateUser(userBody, userId);
         return res.status(204).send();
