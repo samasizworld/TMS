@@ -27,16 +27,19 @@ export class AuthController {
 
         const data = { UserId: user.guid };
         const token = this.authService.generateToken(data);
+
         if (Username && !OTPCode) {
             return res.status(200).send({ AuthenticationKey: token, IsAdmin: user.issystemadmin, sso: true });
 
-        } else {
+        } else if (Username && OTPCode) {
             if (OTPCode && this.mfaService.verifyOTP(OTPCode, user.secretkey2fa)) {
                 return res.status(200).send({ AuthenticationKey: token, IsAdmin: user.issystemadmin, sso: false });
             } else {
                 throw new BadRequestException('Invalid OTPcode');
 
             }
+        } else {
+            throw new BadRequestException('No Code provided');
         }
 
     }
