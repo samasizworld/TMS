@@ -78,4 +78,11 @@ export class TaskService {
             type: QueryTypes.SELECT
         });
     }
+
+    async updateTaskDescription(taskid: number, description: any): Promise<Task> {
+        const whereClause = { datedeleted: null, taskid: taskid };
+        const taskData = {description};
+        const [rows, [user]] = await this.taskContext.update(taskData, { where: whereClause, returning: true });
+        return user;
+    }
 }

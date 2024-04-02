@@ -14,7 +14,7 @@ export class MFA {
     }
 
     async generateQRCodeDataForMFA(key: string, email: string) {
-        return await toDataURL(`otpauth://totp/${email}?secret=${key}&issuedby=tms.asis`)
+        return await toDataURL(`otpauth://totp/${email}?secret=${key}&issuer=tms.asis`)
     }
 
 

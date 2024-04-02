@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Post, Put, Req, Res } from "@nestjs/common";
+import { Controller, Delete, Get, Patch, Post, Put, Req, Res } from "@nestjs/common";
 import { Request, Response } from "express";
 import { TaskService } from "./taskService";
 import { UserTaskService } from "src/usertaskmodule/userTaskService";
@@ -90,6 +90,14 @@ export class TaskController {
         const taskId = req.params.taskid;
         const task = await this.taskService.deleteTask(taskId);
         await this.taskUserService.deleteUserTasks(task.taskid);
+        return res.status(204).send();
+    }
+
+    @Patch('/usertasks/:usertaskid')
+    async patchStatus(@Req() req: Request, @Res() res: Response) {
+        const userTaskId = req.params.usertaskid;
+        const task: any = await this.taskUserService.updateUserTaskRows(req.body.TaskStatus, userTaskId);
+        await this.taskService.updateTaskDescription(task.taskid, req.body.Description)
         return res.status(204).send();
     }
 }
